@@ -12,13 +12,13 @@ const resetSlider = () => {
   price.value = [0, maxPrice];
 };
 
-const applyPrice = () => {
-  setFilter('price', price.value);
-};
-
 watch(isFiltersActive, () => {
   if (!isFiltersActive.value) resetSlider();
 });
+
+watch(price, (val) => {
+  setFilter('price', val);
+}, { deep: true });
 </script>
 
 <template>
@@ -49,7 +49,7 @@ watch(isFiltersActive, () => {
         <label for="price-to" class="leading-none px-2 text-gray-400 absolute">€</label>
       </div>
       <div class="mx-1 mt-1 col-span-full">
-        <Slider v-model="price" :tooltips="false" :min="0" :max="maxPrice" ariaLabelledby="price-from price-to" @change="applyPrice" />
+        <Slider v-model="price" :tooltips="false" :min="0" :max="maxPrice" ariaLabelledby="price-from price-to" />
       </div>
     </div>
   </div>
